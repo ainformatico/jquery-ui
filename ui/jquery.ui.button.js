@@ -319,14 +319,14 @@ $.widget( "ui.button", {
 			return;
 		}
 		var buttonElement = this.buttonElement.removeClass( typeClasses ),
-			buttonText = $( "<span></span>" )
+			buttonText = $( "<span></span>", this.element[0].ownerDocument )
 				.addClass( "ui-button-text" )
 				.html( this.options.label )
 				.appendTo( buttonElement.empty() )
 				.text(),
 			icons = this.options.icons,
 			multipleIcons = icons.primary && icons.secondary,
-			buttonClasses = [];  
+			buttonClasses = [];
 
 		if ( icons.primary || icons.secondary ) {
 			if ( this.options.text ) {
@@ -375,10 +375,10 @@ $.widget( "ui.buttonset", {
 
 		$.Widget.prototype._setOption.apply( this, arguments );
 	},
-	
+
 	refresh: function() {
-		var ltr = this.element.css( "direction" ) === "ltr";
-		
+		var rtl = this.element.css( "direction" ) === "rtl";
+
 		this.buttons = this.element.find( this.options.items )
 			.filter( ":ui-button" )
 				.button( "refresh" )
@@ -391,10 +391,10 @@ $.widget( "ui.buttonset", {
 			})
 				.removeClass( "ui-corner-all ui-corner-left ui-corner-right" )
 				.filter( ":first" )
-					.addClass( ltr ? "ui-corner-left" : "ui-corner-right" )
+					.addClass( rtl ? "ui-corner-right" : "ui-corner-left" )
 				.end()
 				.filter( ":last" )
-					.addClass( ltr ? "ui-corner-right" : "ui-corner-left" )
+					.addClass( rtl ? "ui-corner-left" : "ui-corner-right" )
 				.end()
 			.end();
 	},
